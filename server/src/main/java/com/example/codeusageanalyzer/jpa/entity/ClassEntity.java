@@ -21,6 +21,9 @@ public class ClassEntity {
     private long moduleId;
 
     @Column(nullable = false)
+    private String path;
+
+    @Column(nullable = false)
     private String className;
 
     @Column(nullable = false)

@@ -27,7 +27,7 @@ import com.example.codeusageanalyzer.jooq.tables.records.JClassRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JClass extends TableImpl<JClassRecord> {
 
-    private static final long serialVersionUID = 669802858;
+    private static final long serialVersionUID = -281669906;
 
     /**
      * The reference instance of <code>PUBLIC.CLASS</code>
@@ -64,6 +64,12 @@ public class JClass extends TableImpl<JClassRecord> {
      * The column <code>PUBLIC.CLASS.SUPER_CLASS_NAME</code>.
      */
     public final TableField<JClassRecord, String> SUPER_CLASS_NAME = createField("SUPER_CLASS_NAME",
+            org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+
+    /**
+     * The column <code>PUBLIC.CLASS.PATH</code>.
+     */
+    public final TableField<JClassRecord, String> PATH = createField("PATH",
             org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 
     /**
