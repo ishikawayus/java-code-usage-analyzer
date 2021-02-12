@@ -26,4 +26,7 @@ public class CalleeEntity {
 
     @Column(nullable = false)
     private String descriptor;
+
+    @Column(nullable = false)
+    private boolean invokeDynamic;
 }

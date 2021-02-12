@@ -26,7 +26,7 @@ import com.example.codeusageanalyzer.jooq.tables.records.JCalleeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JCallee extends TableImpl<JCalleeRecord> {
 
-    private static final long serialVersionUID = 820777848;
+    private static final long serialVersionUID = -152385222;
 
     /**
      * The reference instance of <code>PUBLIC.CALLEE</code>
@@ -70,6 +70,12 @@ public class JCallee extends TableImpl<JCalleeRecord> {
      */
     public final TableField<JCalleeRecord, String> OWNER_NAME = createField("OWNER_NAME",
             org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+
+    /**
+     * The column <code>PUBLIC.CALLEE.INVOKE_DYNAMIC</code>.
+     */
+    public final TableField<JCalleeRecord, Boolean> INVOKE_DYNAMIC = createField("INVOKE_DYNAMIC",
+            org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * Create a <code>PUBLIC.CALLEE</code> table reference
