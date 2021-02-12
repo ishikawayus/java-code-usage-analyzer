@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -26,7 +27,7 @@ import com.example.codeusageanalyzer.jooq.tables.records.JDependencyRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JDependency extends TableImpl<JDependencyRecord> {
 
-    private static final long serialVersionUID = -1671581280;
+    private static final long serialVersionUID = 622823035;
 
     /**
      * The reference instance of <code>PUBLIC.DEPENDENCY</code>
@@ -99,6 +100,14 @@ public class JDependency extends TableImpl<JDependencyRecord> {
     @Override
     public Schema getSchema() {
         return JPublic.PUBLIC;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<JDependencyRecord, Long> getIdentity() {
+        return Keys.IDENTITY_DEPENDENCY;
     }
 
     /**

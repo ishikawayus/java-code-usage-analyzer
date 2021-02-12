@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -26,7 +27,7 @@ import com.example.codeusageanalyzer.jooq.tables.records.JInterfaceRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JInterface extends TableImpl<JInterfaceRecord> {
 
-    private static final long serialVersionUID = -592322422;
+    private static final long serialVersionUID = 161091213;
 
     /**
      * The reference instance of <code>PUBLIC.INTERFACE</code>
@@ -87,6 +88,14 @@ public class JInterface extends TableImpl<JInterfaceRecord> {
     @Override
     public Schema getSchema() {
         return JPublic.PUBLIC;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<JInterfaceRecord, Long> getIdentity() {
+        return Keys.IDENTITY_INTERFACE;
     }
 
     /**

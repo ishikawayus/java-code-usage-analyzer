@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -26,7 +27,7 @@ import com.example.codeusageanalyzer.jooq.tables.records.JMethodRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JMethod extends TableImpl<JMethodRecord> {
 
-    private static final long serialVersionUID = 1572869384;
+    private static final long serialVersionUID = 1750381155;
 
     /**
      * The reference instance of <code>PUBLIC.METHOD</code>
@@ -93,6 +94,14 @@ public class JMethod extends TableImpl<JMethodRecord> {
     @Override
     public Schema getSchema() {
         return JPublic.PUBLIC;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<JMethodRecord, Long> getIdentity() {
+        return Keys.IDENTITY_METHOD;
     }
 
     /**

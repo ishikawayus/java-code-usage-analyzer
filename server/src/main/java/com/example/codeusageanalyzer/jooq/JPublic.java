@@ -10,6 +10,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Catalog;
+import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
@@ -28,7 +29,7 @@ import com.example.codeusageanalyzer.jooq.tables.JRepository;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JPublic extends SchemaImpl {
 
-    private static final long serialVersionUID = -31595858;
+    private static final long serialVersionUID = -1147221871;
 
     /**
      * The reference instance of <code>PUBLIC</code>
@@ -83,6 +84,23 @@ public class JPublic extends SchemaImpl {
     @Override
     public Catalog getCatalog() {
         return DefaultCatalog.DEFAULT_CATALOG;
+    }
+
+    @Override
+    public final List<Sequence<?>> getSequences() {
+        List result = new ArrayList();
+        result.addAll(getSequences0());
+        return result;
+    }
+
+    private final List<Sequence<?>> getSequences0() {
+        return Arrays.<Sequence<?>>asList(Sequences.SYSTEM_SEQUENCE_329F1A32_FD9C_4A30_9AD8_B932786E96B3,
+                Sequences.SYSTEM_SEQUENCE_7344AA6C_A669_4CF1_B5B1_1D444518C7FD,
+                Sequences.SYSTEM_SEQUENCE_7E7C649D_E9A0_49A3_9F00_1C62CA820F2E,
+                Sequences.SYSTEM_SEQUENCE_847C61D6_2411_425A_BE5F_7696CB151706,
+                Sequences.SYSTEM_SEQUENCE_B1E2D4A2_0A0C_4447_AF80_82B9EF5D5FDC,
+                Sequences.SYSTEM_SEQUENCE_CDD9F9E2_D1E4_49AD_B1A2_DB99C16DC788,
+                Sequences.SYSTEM_SEQUENCE_ED82774E_9477_4D87_9219_588259F46C85);
     }
 
     @Override

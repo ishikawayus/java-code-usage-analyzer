@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -26,7 +27,7 @@ import com.example.codeusageanalyzer.jooq.tables.records.JClassRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JClass extends TableImpl<JClassRecord> {
 
-    private static final long serialVersionUID = 970268071;
+    private static final long serialVersionUID = 669802858;
 
     /**
      * The reference instance of <code>PUBLIC.CLASS</code>
@@ -93,6 +94,14 @@ public class JClass extends TableImpl<JClassRecord> {
     @Override
     public Schema getSchema() {
         return JPublic.PUBLIC;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<JClassRecord, Long> getIdentity() {
+        return Keys.IDENTITY_CLASS;
     }
 
     /**

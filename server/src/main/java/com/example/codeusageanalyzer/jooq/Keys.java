@@ -5,6 +5,7 @@ package com.example.codeusageanalyzer.jooq;
 
 import javax.annotation.Generated;
 
+import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
 
@@ -35,6 +36,20 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
+    public static final Identity<JCalleeRecord, Long> IDENTITY_CALLEE = Identities0.IDENTITY_CALLEE;
+
+    public static final Identity<JClassRecord, Long> IDENTITY_CLASS = Identities0.IDENTITY_CLASS;
+
+    public static final Identity<JDependencyRecord, Long> IDENTITY_DEPENDENCY = Identities0.IDENTITY_DEPENDENCY;
+
+    public static final Identity<JInterfaceRecord, Long> IDENTITY_INTERFACE = Identities0.IDENTITY_INTERFACE;
+
+    public static final Identity<JMethodRecord, Long> IDENTITY_METHOD = Identities0.IDENTITY_METHOD;
+
+    public static final Identity<JModuleRecord, Long> IDENTITY_MODULE = Identities0.IDENTITY_MODULE;
+
+    public static final Identity<JRepositoryRecord, Long> IDENTITY_REPOSITORY = Identities0.IDENTITY_REPOSITORY;
+
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
@@ -60,6 +75,29 @@ public class Keys {
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
+
+    private static class Identities0 extends AbstractKeys {
+
+        public static Identity<JCalleeRecord, Long> IDENTITY_CALLEE = createIdentity(JCallee.CALLEE,
+                JCallee.CALLEE.CALLEE_ID);
+
+        public static Identity<JClassRecord, Long> IDENTITY_CLASS = createIdentity(JClass.CLASS, JClass.CLASS.CLASS_ID);
+
+        public static Identity<JDependencyRecord, Long> IDENTITY_DEPENDENCY = createIdentity(JDependency.DEPENDENCY,
+                JDependency.DEPENDENCY.DEPENDENCY_ID);
+
+        public static Identity<JInterfaceRecord, Long> IDENTITY_INTERFACE = createIdentity(JInterface.INTERFACE,
+                JInterface.INTERFACE.INTERFACE_ID);
+
+        public static Identity<JMethodRecord, Long> IDENTITY_METHOD = createIdentity(JMethod.METHOD,
+                JMethod.METHOD.METHOD_ID);
+
+        public static Identity<JModuleRecord, Long> IDENTITY_MODULE = createIdentity(JModule.MODULE,
+                JModule.MODULE.MODULE_ID);
+
+        public static Identity<JRepositoryRecord, Long> IDENTITY_REPOSITORY = createIdentity(JRepository.REPOSITORY,
+                JRepository.REPOSITORY.REPOSITORY_ID);
+    }
 
     private static class UniqueKeys0 extends AbstractKeys {
 
