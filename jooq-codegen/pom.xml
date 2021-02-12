@@ -62,6 +62,9 @@
                 <strategy>
                   <name>com.example.codeusageanalyzer.jooqcodegen.CodeUsageAnalyzerStrategy</name>
                 </strategy>
+                <generate>
+                  <daos>true</daos>
+                </generate>
                 <target>
                   <packageName>com.example.codeusageanalyzer.jooq</packageName>
                   <directory>../server/src/main/java</directory>

@@ -8,6 +8,10 @@ public class CodeUsageAnalyzerStrategy extends DefaultGeneratorStrategy {
     @Override
     public String getJavaClassName(Definition definition, Mode mode) {
         String name = super.getJavaClassName(definition, mode);
-        return "J" + name;
+        if (mode == Mode.POJO) {
+            return "J" + name + "Pojo";
+        } else {
+            return "J" + name;
+        }
     }
 }
