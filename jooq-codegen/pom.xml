@@ -2,13 +2,6 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.22.RELEASE</version>
-    <relativePath />
-  </parent>
-
   <groupId>com.example</groupId>
   <artifactId>code-usage-analyzer-jooq-codegen</artifactId>
   <version>0.1.0-SNAPSHOT</version>
@@ -18,21 +11,27 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
-    <db.url>jdbc:h2:../server/h2db</db.url>
-    <db.user>sa</db.user>
-    <db.password></db.password>
-    <db.database>PUBLIC</db.database>
+    <jooq.version>3.9.6</jooq.version>
   </properties>
 
   <dependencies>
+    <!-- jooq -->
     <dependency>
       <groupId>org.jooq</groupId>
       <artifactId>jooq-codegen</artifactId>
+      <version>${jooq.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
+      <groupId>org.jooq</groupId>
+      <artifactId>jooq-meta-extensions</artifactId>
+      <version>${jooq.version}</version>
+    </dependency>
+
+    <!-- project -->
+    <dependency>
+      <groupId>com.example</groupId>
+      <artifactId>code-usage-analyzer-jpa-api</artifactId>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
@@ -41,6 +40,7 @@
       <plugin>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-codegen-maven</artifactId>
+        <version>${jooq.version}</version>
         <executions>
           <execution>
             <?m2e ignore?>
@@ -48,16 +48,17 @@
             <goals>
               <goal>generate</goal>
             </goals>
-            <phase>test</phase>
+            <phase>generate-sources</phase>
             <configuration>
-              <jdbc>
-                <url>${db.url}</url>
-                <user>${db.user}</user>
-                <password>${db.password}</password>
-              </jdbc>
               <generator>
                 <database>
-                  <inputSchema>${db.database}</inputSchema>
+                  <name>org.jooq.util.jpa.JPADatabase</name>
+                  <properties>
+                    <property>
+                      <key>packages</key>
+                      <value>com.example.codeusageanalyzer.jpa.entity</value>
+                    </property>
+                  </properties>
                 </database>
                 <strategy>
                   <name>com.example.codeusageanalyzer.jooqcodegen.CodeUsageAnalyzerStrategy</name>
@@ -67,7 +68,7 @@
                 </generate>
                 <target>
                   <packageName>com.example.codeusageanalyzer.jooq</packageName>
-                  <directory>../server/src/main/java</directory>
+                  <directory>../jooq/src/main/java</directory>
                 </target>
               </generator>
             </configuration>

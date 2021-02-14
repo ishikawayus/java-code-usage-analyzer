@@ -49,7 +49,7 @@ public class CodeUsageAnalyzerApplication {
             return;
         }
         for (JRepositoryRecord repository : repositories) {
-            long repositoryId = repository.getRepositoryId();
+            String repositoryId = repository.getRepositoryId();
             String url = repository.getUrl();
             ProcessUtil.gitClone(url, "repo", new File("."));
             ProcessUtil.mvnCompile(new File("./repo"));
@@ -58,7 +58,7 @@ public class CodeUsageAnalyzerApplication {
         }
     }
 
-    private void analyze(long repositoryId) {
+    private void analyze(String repositoryId) {
         CalleeFileVisitor fileVisitor = new CalleeFileVisitor();
         try {
             Files.walkFileTree(Paths.get("./repo"), fileVisitor);
