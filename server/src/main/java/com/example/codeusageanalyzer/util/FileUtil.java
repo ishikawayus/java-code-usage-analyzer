@@ -8,9 +8,16 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class FileUtil {
 
     public static void delete(Path dir) {
+        if (!dir.toFile().exists()) {
+            log.info("Not exist: dir={}", dir);
+            return;
+        }
         try (Stream<Path> stream = Files.walk(dir, FileVisitOption.FOLLOW_LINKS)) {
             stream.sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
             dir.toFile().delete();

@@ -15,8 +15,9 @@ public class ProcessUtil {
         execute(command, workdir);
     }
 
-    public static void mvnCompile(File workdir) {
-        List<String> command = Arrays.asList("mvn", "compile", "--batch-mode", "-Dskip.npm");
+    public static void mvnCompile(String fileName, File workdir) {
+        List<String> command = Arrays.asList("mvn", "compile", "dependency:list", "--batch-mode", "-Dskip.npm",
+                "-DoutputFile=${project.build.directory}/" + fileName);
         execute(command, workdir);
     }
 
@@ -32,7 +33,7 @@ public class ProcessUtil {
             Process process = processBuilder.start();
             String string;
             try (BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream(), "Shift-JIS"))) {
+                    new InputStreamReader(process.getInputStream(), isWindows() ? "Shift-JIS" : null))) {
                 while ( (string = reader.readLine()) != null) {
                     System.out.println(string);
                 }
