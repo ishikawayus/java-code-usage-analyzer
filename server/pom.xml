@@ -49,6 +49,12 @@
       <version>5.0.4</version>
     </dependency>
 
+    <!-- jackson -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-csv</artifactId>
+    </dependency>
+
     <!-- utils -->
     <dependency>
       <groupId>org.projectlombok</groupId>

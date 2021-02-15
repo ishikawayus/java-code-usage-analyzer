@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
 import org.jooq.Result;
@@ -19,9 +20,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.example.codeusageanalyzer.entity.CalleeMethod;
+import com.example.codeusageanalyzer.entity.CalleeResult;
 import com.example.codeusageanalyzer.entity.ClassDefinition;
 import com.example.codeusageanalyzer.entity.MethodDefinition;
 import com.example.codeusageanalyzer.entity.Module;
+import com.example.codeusageanalyzer.jooq.tables.JCallee;
+import com.example.codeusageanalyzer.jooq.tables.JClass;
+import com.example.codeusageanalyzer.jooq.tables.JMethod;
 import com.example.codeusageanalyzer.jooq.tables.JModule;
 import com.example.codeusageanalyzer.jooq.tables.JRepository;
 import com.example.codeusageanalyzer.jooq.tables.daos.JCalleeDao;
@@ -40,6 +45,7 @@ import com.example.codeusageanalyzer.jooq.tables.records.JRepositoryRecord;
 import com.example.codeusageanalyzer.util.FileUtil;
 import com.example.codeusageanalyzer.util.ProcessUtil;
 import com.example.codeusageanalyzer.visitor.CalleeFileVisitor;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -92,6 +98,29 @@ public class CodeUsageAnalyzerApplication {
             analyze(repositoryId);
         }
         log.info("Finished");
+
+        List<CalleeResult> result = dsl
+                .select(JRepository.REPOSITORY.URL, JModule.MODULE.PATH, JClass.CLASS.CLASS_NAME,
+                        JMethod.METHOD.METHOD_NAME, JMethod.METHOD.DESCRIPTOR, JCallee.CALLEE.OWNER_NAME,
+                        JCallee.CALLEE.METHOD_NAME, JCallee.CALLEE.DESCRIPTOR)
+                .from(JCallee.CALLEE).join(JMethod.METHOD).on(JMethod.METHOD.METHOD_ID.eq(JCallee.CALLEE.METHOD_ID))
+                .join(JClass.CLASS).on(JClass.CLASS.CLASS_ID.eq(JMethod.METHOD.CLASS_ID)).join(JModule.MODULE)
+                .on(JModule.MODULE.MODULE_ID.eq(JClass.CLASS.MODULE_ID)).join(JRepository.REPOSITORY)
+                .on(JRepository.REPOSITORY.REPOSITORY_ID.eq(JModule.MODULE.REPOSITORY_ID)).fetch().stream()
+                .map(r -> CalleeResult.builder().url(r.get(JRepository.REPOSITORY.URL)).path(r.get(JModule.MODULE.PATH))
+                        .className(r.get(JClass.CLASS.CLASS_NAME)).methodName(r.get(JMethod.METHOD.METHOD_NAME))
+                        .descriptor(r.get(JMethod.METHOD.DESCRIPTOR)).calleeOwnerName(r.get(JCallee.CALLEE.OWNER_NAME))
+                        .calleeMethodName(r.get(JCallee.CALLEE.METHOD_NAME))
+                        .calleeDescriptor(r.get(JCallee.CALLEE.DESCRIPTOR)).build())
+                .collect(Collectors.toList());
+        try {
+            CsvMapper csvMapper = new CsvMapper();
+            csvMapper.writer(csvMapper.schemaFor(CalleeResult.class).withHeader()).writeValue(new File("result.csv"),
+                    result);
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to write result", e);
+        }
+        log.info("Wrote result");
     }
 
     private void analyze(String repositoryId) {
@@ -119,8 +148,6 @@ public class CodeUsageAnalyzerApplication {
                 newDependencies.add(newDependency);
             }
         }
-        jModuleDao.insert(newModules);
-        jDependencyDao.insert(newDependencies);
 
         List<JClassPojo> newClasses = new ArrayList<>();
         List<JInterfacePojo> newInterfaces = new ArrayList<>();
@@ -146,10 +173,13 @@ public class CodeUsageAnalyzerApplication {
                 }
             }
         }
-        jClassDao.insert(newClasses);
-        jInterfaceDao.insert(newInterfaces);
-        jMethodDao.insert(newMethods);
+
         jCalleeDao.insert(newCallees);
+        jMethodDao.insert(newMethods);
+        jInterfaceDao.insert(newInterfaces);
+        jClassDao.insert(newClasses);
+        jDependencyDao.insert(newDependencies);
+        jModuleDao.insert(newModules);
     }
 
     private static String findModuleId(Map<Path, String> moduleIdByPath, Path path) {
