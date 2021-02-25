@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
 import org.jooq.Result;
+import org.jooq.conf.RenderNameCase;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -75,6 +76,8 @@ public class CodeUsageAnalyzerApplication {
     private final JModuleDao jModuleDao;
 
     private void run() {
+        dsl.configuration().settings().withRenderNameCase(RenderNameCase.LOWER);
+
         Result<JRepositoryRecord> repositories = dsl.selectFrom(JRepository.REPOSITORY)
                 .orderBy(JRepository.REPOSITORY.REPOSITORY_ID).fetch();
         if (repositories.isEmpty()) {
