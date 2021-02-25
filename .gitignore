@@ -1,0 +1,8 @@
+*.db
+.classpath
+.factorypath
+.project
+.settings/
+target/
+
+/server/repo/
