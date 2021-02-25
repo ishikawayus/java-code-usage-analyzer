@@ -48,7 +48,7 @@
             <goals>
               <goal>generate</goal>
             </goals>
-            <phase>generate-sources</phase>
+            <phase>test</phase>
             <configuration>
               <generator>
                 <database>
