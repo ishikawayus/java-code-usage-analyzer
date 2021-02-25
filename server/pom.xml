@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.22.RELEASE</version>
+    <version>2.4.3</version>
     <relativePath />
   </parent>
 
@@ -46,7 +46,7 @@
     <dependency>
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm</artifactId>
-      <version>5.0.4</version>
+      <version>9.1</version>
     </dependency>
 
     <!-- jackson -->

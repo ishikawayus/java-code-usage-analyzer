@@ -1,7 +1,7 @@
 package com.example.codeusageanalyzer.jooqcodegen;
 
-import org.jooq.util.DefaultGeneratorStrategy;
-import org.jooq.util.Definition;
+import org.jooq.codegen.DefaultGeneratorStrategy;
+import org.jooq.meta.Definition;
 
 public class CodeUsageAnalyzerStrategy extends DefaultGeneratorStrategy {
 

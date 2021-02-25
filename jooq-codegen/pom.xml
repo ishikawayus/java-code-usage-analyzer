@@ -11,7 +11,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
-    <jooq.version>3.9.6</jooq.version>
+    <jooq.version>3.14.7</jooq.version>
   </properties>
 
   <dependencies>
@@ -23,7 +23,7 @@
     </dependency>
     <dependency>
       <groupId>org.jooq</groupId>
-      <artifactId>jooq-meta-extensions</artifactId>
+      <artifactId>jooq-meta-extensions-hibernate</artifactId>
       <version>${jooq.version}</version>
     </dependency>
 
@@ -52,7 +52,7 @@
             <configuration>
               <generator>
                 <database>
-                  <name>org.jooq.util.jpa.JPADatabase</name>
+                  <name>org.jooq.meta.extensions.jpa.JPADatabase</name>
                   <properties>
                     <property>
                       <key>packages</key>
